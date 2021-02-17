@@ -1,4 +1,4 @@
-export const FACTORY_ADDRESS = '0xefa94DE7a4656D787667C749f7E1223D71E9FD88' // new factory
+export const FACTORY_ADDRESS = '0x2Ef422F30cdb7c5F1f7267AB5CF567A88974b308' // new factory
 
 export const WAVAX_ADDRESS = '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7'
 
@@ -22,6 +22,12 @@ export const SUPPORTED_LIST_URLS__NO_ENS = [
 export const OVERVIEW_TOKEN_BLACKLIST = [
   '0xa47a05ed74f80fa31621612887d26df40bcf0ca9',
   '0x97b99b4009041e948337ebca7e6ae52f9f6e633c',
+  // 1. why doesn't work,
+  // 2. where are these from?? absent in both links above
+  '0x474Bb79C3e8E65DcC6dF30F9dE68592ed48BBFDb',
+  '0x008E26068B3EB40B443d3Ea88c1fF99B789c10F7',
+  '0xf6F3EEa905ac1da6F6DD37d06810C6Fcb0EF5183',
+  '0x12f108E6138d4A9c58511e042399cF8f90D5673f'
 ]
 
 // pair blacklist

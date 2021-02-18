@@ -21,16 +21,6 @@ export const healthClient = new ApolloClient({
   shouldBatch: true,
 })
 
-export const stakingClient = new ApolloClient({
-  link: new HttpLink({
-    // they left it as is
-    // no idea what does it do though
-    uri: 'https://api.thegraph.com/subgraphs/name/way2rach/talisman',
-  }),
-  cache: new InMemoryCache(),
-  shouldBatch: true,
-})
-
 export const blockClient = new ApolloClient({
   link: new HttpLink({
     uri: 'http://localhost:8000/subgraphs/name/zeroexchange/avalanche-blocks'

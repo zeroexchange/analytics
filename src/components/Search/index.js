@@ -431,10 +431,10 @@ export const Search = ({ small = false }) => {
               : below410
                 ? 'Search...'
                 : below470
-                  ? 'Search Pangolin...'
+                  ? 'Search Zero...'
                   : below700
                     ? 'Search pairs and tokens...'
-                    : 'Search Pangolin pairs and tokens...'
+                    : 'Search Zero pairs and tokens...'
           }
           value={value}
           onChange={(e) => {

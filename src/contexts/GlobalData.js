@@ -238,32 +238,32 @@ async function getGlobalData(ethPrice, oldEthPrice) {
       query: GLOBAL_DATA(),
       fetchPolicy: 'cache-first',
     })
-    data = result.data.pangolinFactories[0]
+    data = result.data.zeroFactories[0]
 
     // fetch the historical data
     let oneDayResult = await client.query({
       query: GLOBAL_DATA(oneDayBlock?.number),
       fetchPolicy: 'cache-first',
     })
-    oneDayData = oneDayResult.data.pangolinFactories[0]
+    oneDayData = oneDayResult.data.zeroFactories[0]
 
     let twoDayResult = await client.query({
       query: GLOBAL_DATA(twoDayBlock?.number),
       fetchPolicy: 'cache-first',
     })
-    twoDayData = twoDayResult.data.pangolinFactories[0]
+    twoDayData = twoDayResult.data.zeroFactories[0]
 
     let oneWeekResult = await client.query({
       query: GLOBAL_DATA(oneWeekBlock?.number),
       fetchPolicy: 'cache-first',
     })
-    const oneWeekData = oneWeekResult.data.pangolinFactories[0]
+    const oneWeekData = oneWeekResult.data.zeroFactories[0]
 
     let twoWeekResult = await client.query({
       query: GLOBAL_DATA(twoWeekBlock?.number),
       fetchPolicy: 'cache-first',
     })
-    const twoWeekData = twoWeekResult.data.pangolinFactories[0]
+    const twoWeekData = twoWeekResult.data.zeroFactories[0]
 
     if (data) {
       //if (data && oneDayData && twoDayData && twoWeekData) {
@@ -338,8 +338,8 @@ const getChartData = async (oldestDateToFetch, ethPrice) => {
         fetchPolicy: 'cache-first',
       })
       skip += 1000
-      data = data.concat(result.data.pangolinDayDatas)
-      if (result.data.pangolinDayDatas.length < 1000) {
+      data = data.concat(result.data.zeroDayDatas)
+      if (result.data.zeroDayDatas.length < 1000) {
         allFound = true
       }
     }

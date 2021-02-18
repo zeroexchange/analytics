@@ -541,6 +541,7 @@ export function useMiningPositions(account) {
   useEffect(() => {
     async function fetchData(account) {
       try {
+        return;
         let miningPositionData = []
         let result = await stakingClient.query({
           query: MINING_POSITIONS(account),

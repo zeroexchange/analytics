@@ -1,8 +1,9 @@
-import React from 'react'
 import { ThemeProvider as StyledComponentsThemeProvider, createGlobalStyle } from 'styled-components'
-import { useDarkModeManager } from '../contexts/LocalStorage'
-import styled from 'styled-components'
+
+import React from 'react'
 import { Text } from 'rebass'
+import styled from 'styled-components'
+import { useDarkModeManager } from '../contexts/LocalStorage'
 
 export default function ThemeProvider({ children }) {
   const [darkMode] = useDarkModeManager()
@@ -17,7 +18,7 @@ const theme = (darkMode, color) => ({
   panelColor: darkMode ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 0)',
   backgroundColor: darkMode ? '#212429' : '#F7F8FA',
 
-  uniswapPink: darkMode ? '#FF6B00' : 'black',
+  uniswapPink: darkMode ? '#2662FF' : 'black',
 
   concreteGray: darkMode ? '#292C2F' : '#FAFAFA',
   inputBackground: darkMode ? '#1F1F1F' : '#FAFAFA',
@@ -48,14 +49,14 @@ const theme = (darkMode, color) => ({
   divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
 
   //primary colors
-  primary1: darkMode ? '#2172E5' : '#FF6B00',
-  primary2: darkMode ? '#3680E7' : '#FF6B00',
-  primary3: darkMode ? '#4D8FEA' : '#FF6B00',
-  primary4: darkMode ? '#376bad70' : '#FF6B00',
-  primary5: darkMode ? '#153d6f70' : '#FF6B00',
+  primary1: darkMode ? '#2172E5' : '#2662FF',
+  primary2: darkMode ? '#3680E7' : '#2662FF',
+  primary3: darkMode ? '#4D8FEA' : '#2662FF',
+  primary4: darkMode ? '#376bad70' : '#2662FF',
+  primary5: darkMode ? '#153d6f70' : '#2662FF',
 
   // color text
-  primaryText1: darkMode ? '#6da8ff' : '#FF6B00',
+  primaryText1: darkMode ? '#6da8ff' : '#2662FF',
 
   // secondary colors
   secondary1: darkMode ? '#2172E5' : '#ff007a',
@@ -72,7 +73,7 @@ const theme = (darkMode, color) => ({
   link: '#2172E5',
   blue: '2f80ed',
 
-  background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #FF6B00 0%, #fff 0%)`,
+  background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #2662FF 0%, #fff 0%)`,
 })
 
 const TextWrapper = styled(Text)`
@@ -160,14 +161,14 @@ export const GlobalStyle = createGlobalStyle`
   @supports (font-variation-settings: normal) {
     html { font-family: 'Inter var', sans-serif; }
   }
-  
+
   html,
   body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    font-size: 14px;    
+    font-size: 14px;
     background-color: ${({ theme }) => theme.bg6};
   }
 
@@ -179,7 +180,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  
+
 .three-line-legend {
 	width: 100%;
 	height: 70px;
@@ -214,7 +215,7 @@ export const GlobalStyle = createGlobalStyle`
 
 .tv-lightweight-charts{
   width: 100% !important;
-  
+
 
   & > * {
     width: 100% !important;

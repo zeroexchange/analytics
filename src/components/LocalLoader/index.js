@@ -1,5 +1,6 @@
-import React from 'react'
 import styled, { css, keyframes } from 'styled-components'
+
+import React from 'react'
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -37,7 +38,7 @@ const LocalLoader = ({ fill }) => {
   return (
     <Wrapper fill={fill}>
       <AnimatedImg>
-        <img src={require('../../assets/logo.svg')} alt="loading-icon" />
+        <img src={require('../../assets/logo-zero-512.png')} alt="loading-icon" />
       </AnimatedImg>
     </Wrapper>
   )

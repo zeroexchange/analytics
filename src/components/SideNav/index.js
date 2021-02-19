@@ -169,13 +169,18 @@ function SideNav({ history }) {
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://chat.avalabs.org" target="_blank">
+              <Link href="https://discord.com/invite/XtZTNVTX5T" target="_blank">
                 Discord
               </Link>
             </HeaderText>
             <HeaderText>
-              <Link href="https://twitter.com/avalancheavax" target="_blank">
+              <Link href="https://twitter.com/officialzerodex" target="_blank">
                 Twitter
+              </Link>
+            </HeaderText>
+            <HeaderText>
+              <Link href="https://t.me/ZeroExchangeCommunity" target="_blank">
+                Telegram
               </Link>
             </HeaderText>
             <Toggle isActive={isDark} toggle={toggleDarkMode} />

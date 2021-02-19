@@ -4,9 +4,7 @@ import { HttpLink } from 'apollo-link-http'
 
 export const client = new ApolloClient({
   link: new HttpLink({
-    // uri: 'https://graph-node.avax.network/subgraphs/name/zeroexchange/zerograph',
-    uri: 'http://127.0.0.1:8000/subgraphs/name/zeroexchange/zerograph'
-    // url: "http://167.99.252.142:8000/subgraphs/name/zeroexchange/zerograph"
+    uri: "https://graph.zero.exchange/subgraphs/name/zeroexchange/zerograph"
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
@@ -23,7 +21,7 @@ export const healthClient = new ApolloClient({
 
 export const blockClient = new ApolloClient({
   link: new HttpLink({
-    uri: 'http://localhost:8000/subgraphs/name/zeroexchange/avalanche-blocks'
+    uri: 'https://graph.zero.exchange/subgraphs/name/zeroexchange/avalanche-blocks'
   }),
   cache: new InMemoryCache(),
 })

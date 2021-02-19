@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { ApolloProvider } from 'react-apollo'
-import { client } from './apollo/client'
-import { Route, Switch, Redirect, HashRouter } from 'react-router-dom'
-import GlobalPage from './pages/GlobalPage'
-import TokenPage from './pages/TokenPage'
-import PairPage from './pages/PairPage'
-import { useGlobalData, useGlobalChartData } from './contexts/GlobalData'
-import { isAddress } from './utils'
-import AccountPage from './pages/AccountPage'
-import AllTokensPage from './pages/AllTokensPage'
-import AllPairsPage from './pages/AllPairsPage'
-import PinnedData from './components/PinnedData'
-
-import SideNav from './components/SideNav'
-import AccountLookup from './pages/AccountLookup'
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { OVERVIEW_TOKEN_BLACKLIST, PAIR_BLACKLIST } from './constants'
+import React, { useState } from 'react'
+import { useGlobalChartData, useGlobalData } from './contexts/GlobalData'
+
+import AccountLookup from './pages/AccountLookup'
+import AccountPage from './pages/AccountPage'
+import AllPairsPage from './pages/AllPairsPage'
+import AllTokensPage from './pages/AllTokensPage'
+import { ApolloProvider } from 'react-apollo'
+import GlobalPage from './pages/GlobalPage'
 import LocalLoader from './components/LocalLoader'
+import PairPage from './pages/PairPage'
+import PinnedData from './components/PinnedData'
+import SideNav from './components/SideNav'
+import TokenPage from './pages/TokenPage'
+import { client } from './apollo/client'
+import { isAddress } from './utils'
+import styled from 'styled-components'
 import { useLatestBlocks } from './contexts/Application'
 
 const AppWrapper = styled.div`
@@ -110,7 +110,7 @@ function App() {
         {showWarning && (
           <WarningWrapper>
             <WarningBanner>
-              {`Warning: The data on this site has only synced to Avalanche block ${latestBlock} (out of ${headBlock}). Please check back soon.`}
+              {`Warning: The data on this site has only synced to Avalanche block ${latestBlock} (out of ${headBlock}). Please check back later.`}
             </WarningBanner>
           </WarningWrapper>
         )}

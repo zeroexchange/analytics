@@ -156,7 +156,7 @@ function PairPage({ pairAddress, history }) {
     setUsingUtVolume(oneDayVolumeUSD === 0 ? true : false)
   }, [oneDayVolumeUSD])
 
-  const volumeChange = formattedPercent(!usingUtVolume ? volumeChangeUSD : volumeChangeUntracked)
+  const volumeChange = formattedPercent(usingUtVolume ? volumeChangeUntracked : volumeChangeUSD)
 
   // get fees	  // get fees
   const fees =

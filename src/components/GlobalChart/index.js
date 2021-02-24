@@ -29,6 +29,7 @@ const GlobalChart = ({ display }) => {
 
   // global historical data
   const [dailyData, weeklyData] = useGlobalChartData()
+  // these values are sane
   const {
     totalLiquidityUSD,
     oneDayVolumeUSD,
@@ -38,26 +39,34 @@ const GlobalChart = ({ display }) => {
     weeklyVolumeChange,
   } = useGlobalData()
 
+
+  // dailyData looks like 
+  // dailyVolumeETH: "162423.2860178005932075614440893966"
+  // dailyVolumeUSD: 2574161.832883792
+  // date: 1612483200
+  // id: "18663"
+  // totalLiquidityETH: "338202.4585066298896705281959824431"
+  // totalLiquidityUSD: "5981166.185364733054445272095599672"
+  // totalVolumeUSD: "0"
+  // console.log('dailyData', dailyData)
+  // console.log('weeklyData', weeklyData)
+  // weeklyData looks like
+  // 0: {date: 1612569600, weeklyVolumeUSD: 12083168.678718774}
+  // 1: {date: 1613174400, weeklyVolumeUSD: 24178324.95422318}
+  // 2: {date: 1613779200, weeklyVolumeUSD: 41911687.18889007}
+  // 3: {date: 1614124800, weeklyVolumeUSD: 26529047.660693746
+
+  // dailyData = dailyData?.forEach(d => {
+  //   d.dailyVolumeETH = '0'
+  // })
+
   // based on window, get starttim
   let utcStartTime = getTimeframe(timeWindow)
 
   const chartDataFiltered = useMemo(() => {
     let currentData = volumeWindow === VOLUME_WINDOW.DAYS ? dailyData : weeklyData
-    return (
-      currentData &&
-      Object.keys(currentData)
-        ?.map((key) => {
-          let item = currentData[key]
-          if (item.date > utcStartTime) {
-            return item
-          } else {
-            return undefined;
-          }
-        })
-        .filter((item) => {
-          return !!item
-        })
-    )
+
+    return currentData?.filter(item => item.date > utcStartTime)
   }, [dailyData, utcStartTime, volumeWindow, weeklyData])
   const below800 = useMedia('(max-width: 800px)')
 

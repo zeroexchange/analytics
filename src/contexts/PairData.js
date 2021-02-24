@@ -269,16 +269,16 @@ async function getBulkPairData(pairList, ethPrice) {
 function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBlock) {
   // get volume changes
   const [oneDayVolumeUSD, volumeChangeUSD] = get2DayPercentChange(
-    data?.volumeUSD * ethPrice,
-    oneDayData?.volumeUSD ? oneDayData.volumeUSD * ethPrice : 0,
-    twoDayData?.volumeUSD ? twoDayData.volumeUSD * ethPrice : 0
+    data?.volumeUSD,
+    oneDayData?.volumeUSD ? oneDayData.volumeUSD : 0,
+    twoDayData?.volumeUSD ? twoDayData.volumeUSD : 0
   )
   const [oneDayVolumeUntracked, volumeChangeUntracked] = get2DayPercentChange(
-    data?.untrackedVolumeUSD * ethPrice,
-    oneDayData?.untrackedVolumeUSD ? parseFloat(oneDayData?.untrackedVolumeUSD) * ethPrice : 0,
-    twoDayData?.untrackedVolumeUSD ? twoDayData?.untrackedVolumeUSD * ethPrice : 0
+    data?.untrackedVolumeUSD,
+    oneDayData?.untrackedVolumeUSD ? parseFloat(oneDayData?.untrackedVolumeUSD) : 0,
+    twoDayData?.untrackedVolumeUSD ? twoDayData?.untrackedVolumeUSD : 0
   )
-  const oneWeekVolumeUSD = parseFloat(oneWeekData ? (data?.volumeUSD - oneWeekData?.volumeUSD) * ethPrice : data.volumeUSD * ethPrice)
+  const oneWeekVolumeUSD = parseFloat(oneWeekData ? (data?.volumeUSD - oneWeekData?.volumeUSD) : data.volumeUSD)
 
   // set volume properties
   data.oneDayVolumeUSD = parseFloat(oneDayVolumeUSD)
@@ -289,7 +289,7 @@ function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBl
 
   // set liquiditry properties
   data.trackedReserveUSD = data.trackedReserveETH * ethPrice
-  data.liquidityChangeUSD = getPercentChange(data.reserveUSD * ethPrice, oneDayData?.reserveUSD * ethPrice)
+  data.liquidityChangeUSD = getPercentChange(data.reserveUSD, oneDayData?.reserveUSD)
 
   // format if pair hasnt existed for a day or a week
   if (!oneDayData && data && data.createdAtBlockNumber > oneDayBlock) {

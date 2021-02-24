@@ -301,7 +301,7 @@ async function getGlobalData(ethPrice, oldEthPrice) {
         data.liquidityChangeUSD = liquidityChangeUSD
 
         // add relevant fields with the calculated amounts
-        data.oneDayVolumeUSD = oneDayVolumeUSD * ethPrice
+        data.oneDayVolumeUSD = oneDayVolumeUSD
         data.volumeChangeUSD = volumeChangeUSD
         data.oneDayTxns = oneDayTxns
         data.txnChange = txnChange
@@ -399,6 +399,18 @@ const getChartData = async (oldestDateToFetch, ethPrice) => {
   } catch (e) {
     console.log(e)
   }
+
+  data.forEach(d => {
+    // d.dailyVolumeUSD = '0';
+    // d.dailyVolumeETH = '0';
+    // d.totalLiquidityETH = '0';
+    // d.totalLiquidityUSD = String(d.totalLiquidityUSD * 3)
+  })
+  // console.log('data', data.map(d => {
+  //   const { totalLiquidityUSD } = d;
+  //   return { totalLiquidityUSD }
+  // }))
+
   return [data, weeklyData]
 }
 
@@ -443,7 +455,7 @@ const getGlobalTransactions = async () => {
 }
 
 /**
- * Gets the current price  of ETH, 24 hour price, and % change between them
+ * Gets the current price of ETH (AVAX in fact ofc), 24 hour price, and % change between them
  */
 const getEthPrice = async () => {
   const utcCurrentTime = dayjs()
@@ -591,8 +603,9 @@ export function useGlobalData() {
     async function fetchData() {
       console.log("Effect activated")
       let globalData = await getGlobalData(ethPrice, oldEthPrice)
-      //console.log("Global total liquidity", globalData.totalLiquidityUSD)
+      // console.log("Global total liquidity", globalData.totalLiquidityUSD)
       globalData && update(globalData)
+      // console.log('globalDatta', globalData)
 
       let allPairs = await getAllPairsOnUniswap()
       updateAllPairsInUniswap(allPairs)

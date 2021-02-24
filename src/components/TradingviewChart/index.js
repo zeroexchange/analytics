@@ -8,7 +8,6 @@ import { usePrevious } from 'react-use'
 import { Play } from 'react-feather'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
 import { IconWrapper } from '..'
-import { useEthPrice } from '../../contexts/GlobalData'
 
 dayjs.extend(utc)
 
@@ -41,8 +40,6 @@ const TradingViewChart = ({
   const [chartCreated, setChartCreated] = useState(false)
   const dataPrev = usePrevious(data)
 
-  let ethPrice = useEthPrice()[0]
-
   useEffect(() => {
     if (data !== dataPrev && chartCreated && type === CHART_TYPES.BAR) {
       // remove the tooltip element
@@ -58,7 +55,7 @@ const TradingViewChart = ({
   const formattedData = data?.map((entry) => {
     return {
       time: dayjs.unix(entry.date).utc().format('YYYY-MM-DD'),
-      value: parseFloat(entry[field]) * ethPrice,
+      value: parseFloat(entry[field]),
     }
   })
 

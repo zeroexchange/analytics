@@ -280,10 +280,6 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
         )
 
         // set data
-        //? here's where we take current price to display on token page 
-        //? that's how we compute price chart data also, so how 
-        //? the price differs?
-        //? this price seems real, https://coinmarketcap.com/currencies/zero-exchange/
         data.priceUSD = data?.derivedETH * ethPrice
         data.totalLiquidityUSD = currentLiquidityUSD
         data.oneDayVolumeUSD = parseFloat(oneDayVolumeUSD)

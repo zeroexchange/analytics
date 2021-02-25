@@ -11,7 +11,7 @@ import {
   PAIR_DATA,
 } from '../apollo/queries'
 
-import { useEthPrice, getEthPriceAtDate, getCurrentEthPrice, getEthPriceAtTimestamp } from './GlobalData'
+import { useEthPrice, getEthPriceAtDate, getCurrentEthPrice } from './GlobalData'
 
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'

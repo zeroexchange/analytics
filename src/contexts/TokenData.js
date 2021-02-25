@@ -280,6 +280,10 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
         )
 
         // set data
+        //? here's where we take current price to display on token page 
+        //? that's how we compute price chart data also, so how 
+        //? the price differs?
+        //? this price seems real, https://coinmarketcap.com/currencies/zero-exchange/
         data.priceUSD = data?.derivedETH * ethPrice
         data.totalLiquidityUSD = currentLiquidityUSD
         data.oneDayVolumeUSD = parseFloat(oneDayVolumeUSD)
@@ -326,6 +330,8 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
 }
 
 const getTokenData = async (address, ethPrice, ethPriceOld) => {
+  //? this is not called on token page, because 
+  //? data is already fetched by getTopTokens
   const utcCurrentTime = dayjs()
   const utcOneDayBack = utcCurrentTime.subtract(1, 'day').startOf('minute').unix()
   const utcTwoDaysBack = utcCurrentTime.subtract(2, 'day').startOf('minute').unix()
@@ -403,8 +409,6 @@ const getTokenData = async (address, ethPrice, ethPriceOld) => {
 
     const currentLiquidityUSD = data?.totalLiquidity * ethPrice * data?.derivedETH
     const oldLiquidityUSD = oneDayData?.totalLiquidity * ethPriceOld * oneDayData?.derivedETH
-
-    console.log('oneDayVolumeUSD', oneDayVolumeUSD);
 
     // set data
     data.priceUSD = data?.derivedETH * ethPrice
@@ -508,56 +512,49 @@ const getIntervalTokenData = async (tokenAddress, startTime, interval = 3600, la
     }
 
     if (latestBlock) {
-      blocks = blocks.filter((b) => {
-        return parseFloat(b.number) <= parseFloat(latestBlock)
-      })
+      blocks = blocks.filter((b) => parseFloat(b.number) <= parseFloat(latestBlock))
     }
 
     let result = await splitQuery(PRICES_BY_BLOCK, client, [tokenAddress], blocks, 50)
 
-    // format token ETH price results
-    let values = []
-    for (var row in result) {
-      let timestamp = row.split('t')[1]
-      let derivedETH = parseFloat(result[row]?.derivedETH)
-      if (timestamp) {
-        values.push({
-          timestamp,
-          derivedETH,
-        })
-      }
+    const ethPrices = Object.entries(result)
+      .filter(item => item[0].startsWith('b'))
+      .filter(item => item[1])
+      .map(([k, v]) => ({
+        timestamp: k.slice(1),
+        ethPrice: v.ethPrice,
+      }));
+
+    const derivedEths = Object.entries(result)
+      .filter(item => item[0].startsWith('t'))
+      .filter(item => item[1])
+      .map(([k, v]) => ({
+        timestamp: k.slice(1),
+        derivedETH: v.derivedETH,
+      }));
+
+    // TODO maybe just assertSorted?
+    ethPrices.sort((a, b) => a.timestamp - b.timestamp);
+    derivedEths.sort((a, b) => a.timestamp - b.timestamp);
+
+    let ethIdx = 0;
+    for (const item of derivedEths) {
+      while (ethPrices[ethIdx].timestamp < item.timestamp)
+        ++ethIdx;
+
+      item.priceUSD = item.derivedETH * ethPrices[ethIdx].ethPrice;
     }
 
-    let timestampedPrices = await getEthPriceAtTimestamp(startTime)
-
-    // go through eth usd prices and assign to original values array
-    let index = 0
-    for (var brow in result) {
-      let timestamp = brow.split('b')[1]
-      if (timestamp) {
-        // TODO This is n^2, optimize
-        for (let i = 0; i < timestampedPrices.length; i++) {
-          if (timestampedPrices[i][0] > timestamp) {
-            values[index].priceUSD = timestampedPrices[i][1] * values[index].derivedETH
-            index += 1
-            break
-          }
-        }
-      }
-    }
-
-    let formattedHistory = []
-
-    // for each hour, construct the open and close price
-    for (let i = 0; i < values.length - 1; i++) {
+    let formattedHistory = [];
+    for (let i = 0; i < derivedEths.length - 1; i++) {
       formattedHistory.push({
-        timestamp: values[i].timestamp,
-        open: parseFloat(values[i].priceUSD),
-        close: parseFloat(values[i + 1].priceUSD),
+        timestamp: derivedEths[i].timestamp,
+        open: parseFloat(derivedEths[i].priceUSD),
+        close: parseFloat(derivedEths[i + 1].priceUSD),
       })
     }
 
-    return formattedHistory
+    return formattedHistory;
   } catch (e) {
     console.log(e)
     console.log('error fetching blocks')
@@ -633,12 +630,15 @@ const getTokenChartData = async (tokenAddress) => {
         latestAvaxPrice = await getEthPriceAtDate(data[j].date)
       }
       data[j].priceUSD = data[j].priceUSD * latestAvaxPrice
-      data[j].totalLiquidityUSD = data[j].totalLiquidityUSD * latestAvaxPrice
-      data[j].dailyVolumeUSD = data[j].dailyVolumeUSD * latestAvaxPrice
+      //? Where this price goes? it doesn't change price chart on token page
+      data[j].priceUSD = 0;
+      //? data[j].totalLiquidityUSD = data[j].totalLiquidityUSD * latestAvaxPrice
+      //? data[j].dailyVolumeUSD = data[j].dailyVolumeUSD * latestAvaxPrice
     }
   } catch (e) {
     console.log(e)
   }
+  // console.log('Token data after processing', data);
   return data
 }
 

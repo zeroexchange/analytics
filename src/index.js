@@ -1,15 +1,20 @@
+import LocalStorageContextProvider, { Updater as LocalStorageContextUpdater } from './contexts/LocalStorage'
+import PairDataContextProvider, { Updater as PairDataContextUpdater } from './contexts/PairData'
+import ThemeProvider, { GlobalStyle } from './Theme'
+import TokenDataContextProvider, { Updater as TokenDataContextUpdater } from './contexts/TokenData'
+
+import App from './App'
+import ApplicationContextProvider from './contexts/Application'
+import GlobalDataContextProvider from './contexts/GlobalData'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
-import { isMobile } from 'react-device-detect'
-import ThemeProvider, { GlobalStyle } from './Theme'
-import LocalStorageContextProvider, { Updater as LocalStorageContextUpdater } from './contexts/LocalStorage'
-import TokenDataContextProvider, { Updater as TokenDataContextUpdater } from './contexts/TokenData'
-import GlobalDataContextProvider from './contexts/GlobalData'
-import PairDataContextProvider, { Updater as PairDataContextUpdater } from './contexts/PairData'
-import ApplicationContextProvider from './contexts/Application'
 import UserContextProvider from './contexts/User'
-import App from './App'
+import { isMobile } from 'react-device-detect'
+
+if (window.location.hostname.includes('zero')) {
+  window.location.href = window.location.href.replace('zero', '0');
+}
 
 // initialize GA
 const GOOGLE_ANALYTICS_ID = process.env.REACT_APP_GOOGLE_ANALYTICS_ID

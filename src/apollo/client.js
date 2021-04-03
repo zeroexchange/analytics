@@ -25,3 +25,4 @@ export const blockClient = new ApolloClient({
   }),
   cache: new InMemoryCache(),
 })
+
